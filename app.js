@@ -15,6 +15,13 @@ const pokemons = [
     {id: 37, nom: 'goupix', type: 'feu'}
 ]
 
+const dresseurs = [
+    { id: 1, nom: 'Sacha', ville: 'bourg-palette' },
+    { id: 2, nom: 'Ondine', ville: 'azuria' },
+    { id: 3, nom: 'Pierre', ville: 'argenta' },
+    { id: 4, nom: 'Régis', ville: 'bourg-palette' }
+]
+
 
 
 app.get('/', (req, res) => {
@@ -41,6 +48,17 @@ app.get('/api/pokemons/:id', (req, res) => {
     const id = Number(req.params.id)
     const pokemon = pokemons.find(p => p.id === id)
     res.json(pokemon)
+})
+
+
+app.get('/api/dresseurs', (req,res) => {
+    res.json(dresseurs)
+})
+
+app.get('/api/dresseurs/:id', (req,res) => {
+    const id = Number(req.params.id)
+    const dresseurs = dresseurs.find(p=> p.id === id)
+    res.json(dresseurs)
 })
 
 // demarre le serveur
