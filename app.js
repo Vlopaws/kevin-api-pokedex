@@ -40,13 +40,28 @@ app.get('/api/status', (req,res) => {
 
 //renvoie la list des pokemons
 app.get('/api/pokemons', (req,res) => {
+    const type = req.query.type
+
+    if (type) {
+        const resultat = pokemons.filter(p => p.type === type)
+        return res.json(resultat)
+    }
+
     res.json(pokemons)
 })
 
 // renvoie un pokemon a partir de son id
 app.get('/api/pokemons/:id', (req, res) => {
     const id = Number(req.params.id)
+
+    if (Number.isNaN(id)) {
+        return res.status(400).json({message: "L'identifiant doit etre un nombre"})
+    }
     const pokemon = pokemons.find(p => p.id === id)
+
+    if(!pokemon) {
+        return res.status(404).json({message: 'Pokemon introuvable'})
+    }
     res.json(pokemon)
 })
 
@@ -57,7 +72,17 @@ app.get('/api/dresseurs', (req,res) => {
 
 app.get('/api/dresseurs/:id', (req,res) => {
     const id = Number(req.params.id)
-    const dresseurs = dresseurs.find(p=> p.id === id)
+
+
+    if (Number.isNaN(id)) {
+        return res.status(400).json({message: "L'identifiant doit etre un nombre"})
+    }
+    const dresseurs = dresseurs.find(d => d.id === id)
+    
+    if(!dresseurs) {
+        return res.status(404).json({message: 'Dresseurs introuvable'})
+    }
+
     res.json(dresseurs)
 })
 
